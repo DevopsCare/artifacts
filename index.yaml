@@ -3,6 +3,17 @@ entries:
   hummingbot:
   - apiVersion: v2
     appVersion: latest
+    created: "2021-11-26T14:37:45.220371647Z"
+    description: A Helm chart for Hummingbot
+    digest: c05e070e3698ee004371bbf750e371ed8fcbdc52c92e29ed10f08834f01bdc77
+    icon: https://docs.hummingbot.io/assets/img/logo.png
+    name: hummingbot
+    type: application
+    urls:
+    - https://github.com/DevopsCare/artifacts/releases/download/hummingbot-0.2.0/hummingbot-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: latest
     created: "2021-11-26T10:55:49.067722599Z"
     description: A Helm chart for Hummingbot
     digest: 439b3a8c775f5e6f358712312371f7e3c4d9d4ded5c29192d3e93148aba702af
@@ -12,4 +23,4 @@ entries:
     urls:
     - https://github.com/DevopsCare/artifacts/releases/download/hummingbot-0.1.0/hummingbot-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-26T10:55:49.067732699Z"
+generated: "2021-11-26T14:37:45.220379547Z"
