@@ -23,7 +23,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations: { }
 
 podSecurityContext:
   fsGroup: 1000
@@ -76,3 +76,12 @@ persistence:
     size: 1Gi
   logs:
     size: 1Gi
+
+#password: secret_password
+
+quickstart:
+  enabled: false
+  config:
+    # Write your config lines here
+    template_version: 22
+    strategy: pure_market_making

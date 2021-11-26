@@ -34,11 +34,18 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           tty: true
           stdin: true
-          {{- if .Values.ttyd.enabled }}
+          {{- if or .Values.ttyd.enabled .Values.quickstart.enabled .Values.password }}
           command: [/bin/bash]
           args:
             - -c
-            - ttyd /home/hummingbot/miniconda3/envs/$(head -1 setup/environment-linux.yml | cut -d' ' -f2)/bin/python3 bin/hummingbot_quickstart.py --auto-set-permissions $(id -nu):$(id -ng)
+            - >
+              {{ if .Values.quickstart.enabled}}cp /quickstart.yml /conf/ ; {{ end -}}
+              {{ if .Values.ttyd.enabled}}ttyd tmux -S /data/tmux.sock new -A -s hummingbot {{ end -}}
+              /home/hummingbot/miniconda3/envs/$(head -1 setup/environment-linux.yml | cut -d' ' -f2)/bin/python3
+              bin/hummingbot_quickstart.py
+              {{ if .Values.password}}-p {{ .Values.password}}{{ end }}
+              {{ if .Values.quickstart.enabled}}-f quickstart.yml{{ end }}
+              --auto-set-permissions $(id -nu):$(id -ng)
           {{- end }}
           volumeMounts:
             - mountPath: /data
@@ -52,6 +59,11 @@ spec:
               subPath: scripts
             - mountPath: /logs
               name: {{ include "hummingbot.fullname" . }}-logs
+            {{- if .Values.quickstart.enabled }}
+            - name: quickstart-config
+              mountPath: /quickstart.yml
+              subPath: quickstart.yml
+            {{- end }}
           {{- if .Values.ttyd.enabled }}
           ports:
             - name: http
@@ -68,6 +80,12 @@ spec:
           {{- end }}
           resources:
       {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.quickstart.enabled }}
+      volumes:
+        - name: quickstart-config
+          configMap:
+           name: {{ .Release.Name }}-quickstart
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
       {{- toYaml . | nindent 8 }}
