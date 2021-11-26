@@ -1,0 +1,7 @@
+apiVersion: v2
+name: hummingbot
+description: A Helm chart for Hummingbot
+icon: https://docs.hummingbot.io/assets/img/logo.png
+type: application
+version: 0.1.0
+appVersion: latest
