@@ -34,7 +34,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           tty: true
           stdin: true
-          {{- if .Values.ttyd.enabled -}}
+          {{- if .Values.ttyd.enabled }}
           command: [/bin/bash]
           args:
             - -c
@@ -52,7 +52,7 @@ spec:
               subPath: scripts
             - mountPath: /logs
               name: {{ include "hummingbot.fullname" . }}-logs
-          {{- if .Values.ttyd.enabled -}}
+          {{- if .Values.ttyd.enabled }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
